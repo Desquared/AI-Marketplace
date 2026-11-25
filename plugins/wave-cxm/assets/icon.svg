@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="t">
+  <!-- PLACEHOLDER: neutral monogram, not official Wave CXM artwork. Replace before submission. -->
+  <title id="t">Wave CXM (placeholder icon)</title>
+  <rect width="512" height="512" rx="112" fill="#1F2937"/>
+  <path d="M112 160 L184 352 L256 200 L328 352 L400 160"
+        fill="none" stroke="#F9FAFB" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M120 412 Q188 380 256 412 T392 412" fill="none" stroke="#9CA3AF" stroke-width="16" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360" role="img" aria-labelledby="title desc" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+  <title id="title">Wave CXM plugin: two connectors</title>
+  <desc id="desc">Your AI assistant loads the Wave CXM skills and a write-guard hook. It talks to two MCP connectors: wave-cxm on production, which is read-only because it has no write tools, and wave-cxm-stage on stage, which reads and writes. Each signs you in separately with OAuth, scoped to the tenants and permissions you grant.</desc>
+  <style>
+    .bg{fill:#FFFFFF}.box{fill:#F3F4F6;stroke:#9CA3AF;stroke-width:1.5}
+    .prod{fill:#ECFDF5;stroke:#059669;stroke-width:2}.stage{fill:#FFFBEB;stroke:#D97706;stroke-width:2}
+    .h{font-size:17px;font-weight:600;fill:#111827}.t{font-size:13px;fill:#374151}.m{font-size:12px;fill:#4B5563;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+    .ln{stroke:#6B7280;stroke-width:2;fill:none}.ah{fill:#6B7280}
+    @media (prefers-color-scheme: dark){
+      .bg{fill:#0D1117}.box{fill:#161B22;stroke:#6E7681}.prod{fill:#0B2A1F;stroke:#34D399}.stage{fill:#2A1E07;stroke:#FBBF24}
+      .h{fill:#F0F6FC}.t{fill:#C9D1D9}.m{fill:#9DA7B3}.ln{stroke:#8B949E}.ah{fill:#8B949E}
+    }
+  </style>
+  <rect class="bg" width="880" height="360" rx="12"/>
+  <rect class="box" x="24" y="96" width="250" height="168" rx="10"/>
+  <text class="h" x="44" y="128">Your AI assistant</text>
+  <text class="t" x="44" y="156">Claude, Codex, Copilot, Cursor,</text>
+  <text class="t" x="44" y="174">Gemini CLI, Kiro, Cline …</text>
+  <text class="t" x="44" y="206">+ Wave CXM skills</text>
+  <text class="t" x="44" y="226">+ stage write-guard hook</text>
+  <text class="m" x="44" y="250">(plugin channels only)</text>
+
+  <path class="ln" d="M274 150 C 340 150, 360 92, 452 92"/><path class="ah" d="M452 86 L464 92 L452 98 Z"/>
+  <path class="ln" d="M274 210 C 340 210, 360 268, 452 268"/><path class="ah" d="M452 262 L464 268 L452 274 Z"/>
+  <text class="m" x="300" y="182">OAuth · streamable HTTP</text>
+
+  <rect class="prod" x="468" y="28" width="388" height="128" rx="10"/>
+  <text class="h" x="488" y="60">wave-cxm · production</text>
+  <text class="m" x="488" y="84">https://api.wavecxm.com/mcp</text>
+  <text class="t" x="488" y="112">Read only — write tools do not exist here.</text>
+  <text class="t" x="488" y="136">Listed in MCP registries and directories.</text>
+
+  <rect class="stage" x="468" y="204" width="388" height="128" rx="10"/>
+  <text class="h" x="488" y="236">wave-cxm-stage · stage</text>
+  <text class="m" x="488" y="260">https://stage.api.wavecxm.com/mcp</text>
+  <text class="t" x="488" y="288">Read and write (allow-listed), plus user guide.</text>
+  <text class="t" x="488" y="312">Ships with the plugin only.</text>
+</svg>
