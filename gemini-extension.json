@@ -1,0 +1,14 @@
+{
+  "name": "wave-cxm",
+  "version": "1.1.0",
+  "description": "Wave CXM loyalty platform integration: a read-only production connector, a read/write stage connector, and skills to verify, diagnose, map and author loyalty configuration.",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "wave-cxm": {
+      "httpUrl": "https://api.wavecxm.com/mcp"
+    },
+    "wave-cxm-stage": {
+      "httpUrl": "https://stage.api.wavecxm.com/mcp"
+    }
+  }
+}

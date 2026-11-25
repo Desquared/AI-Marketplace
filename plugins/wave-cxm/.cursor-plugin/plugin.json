@@ -1,0 +1,18 @@
+{
+  "name": "wave-cxm",
+  "displayName": "Wave CXM",
+  "version": "1.1.0",
+  "description": "Wave CXM loyalty platform integration: a read-only production connector, a read/write stage connector, and skills to verify, diagnose, map and author loyalty configuration.",
+  "author": {
+    "name": "Desquared",
+    "email": "engineering@desquared.com"
+  },
+  "homepage": "https://go.wavecxm.com",
+  "repository": "https://github.com/Desquared/AI-Marketplace",
+  "license": "LicenseRef-Desquared-Proprietary",
+  "keywords": ["wave-cxm", "loyalty", "customer-experience", "cxm", "mcp", "campaigns", "coupons", "rewards", "contests", "configuration"],
+  "logo": "assets/icon.png",
+  "skills": "skills/",
+  "rules": "rules/",
+  "mcpServers": ".mcp.json"
+}

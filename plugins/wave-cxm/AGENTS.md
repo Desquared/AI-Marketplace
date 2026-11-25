@@ -12,8 +12,14 @@ Plugin-specific notes. For marketplace wiring, the ambient-rules channel, the pu
 | `skills/tenant-map/` | Tenant orientation and permission-gap reporting. |
 | `skills/author-config/` | Guided create/update/delete, stage only. |
 | `hooks/hooks.json` | Targeted write guard on the three stage write tools. |
+| `com.github.copilot/hooks/hooks.json` | Byte-identical copy of `hooks/hooks.json`. Copilot CLI reads an Agent Plugins plugin's hooks only from here. |
 | `rules/` | Ambient channel for editors that cannot install plugins. |
-| `.mcp.json` | The two connectors. |
+| `.mcp.json` | The two connectors (Claude Code, Codex and Cursor dialect). |
+| `mcp.json` | The same two connectors in the Agent Plugins dialect (`streamable-http`). |
+| `server.json` | The production connector's Official MCP Registry entry, `com.wavecxm/mcp`. |
+| `assets/` | Listing icon and logos from the official Wave CXM artwork, and the two-connector diagram. See `assets/README.md`. |
+
+**The two connectors are declared three times**: `.mcp.json`, `mcp.json` and the repository root's `gemini-extension.json`. `server.json` declares production only. Change them together; `bin/lib/manifest-validate.test.js` fails when they drift.
 
 **Cross-cutting rules belong in `wave-cxm-context`, not duplicated into workflow skills.** The one deliberate exception is `rules/wave-cxm-environments.md`, which restates the safety-critical subset because an ambient slot cannot trigger on a non-user-invocable skill's description.
 
@@ -44,33 +50,29 @@ Bump together:
 - `plugin.json`
 - `.claude-plugin/plugin.json`
 - `.codex-plugin/plugin.json`
+- `.cursor-plugin/plugin.json`
 - the `version` field in the root `.claude-plugin/marketplace.json`
 - the `version` field in the root `.github/plugin/marketplace.json`
+- the root `gemini-extension.json`
 
-The Codex catalog (`.agents/plugins/marketplace.json`) tracks a `ref`, not a version.
+The `version` workflow does this for you; do not bump by hand. The Codex catalog (`.agents/plugins/marketplace.json`) tracks a `ref`, not a version. `server.json` carries the MCP server's own version and is raised by hand before each `mcp-publisher publish`.
 
 ## Verifying
 
 ```bash
 # JSON parses
 for f in plugins/wave-cxm/plugin.json plugins/wave-cxm/.claude-plugin/plugin.json \
-         plugins/wave-cxm/.codex-plugin/plugin.json plugins/wave-cxm/.mcp.json \
+         plugins/wave-cxm/.codex-plugin/plugin.json plugins/wave-cxm/.cursor-plugin/plugin.json \
+         plugins/wave-cxm/.mcp.json plugins/wave-cxm/mcp.json plugins/wave-cxm/server.json \
          plugins/wave-cxm/hooks/hooks.json; do
   node -e 'JSON.parse(require("fs").readFileSync(process.argv[1],"utf8"))' "$f" && echo "ok $f"
 done
 
-# Manifest path fields resolve, and no agents key is declared
-node -e '
-const fs=require("fs"),p=require("path");const root="plugins/wave-cxm";let bad=0;
-for (const m of ["plugin.json",".claude-plugin/plugin.json",".codex-plugin/plugin.json"]) {
-  const j=JSON.parse(fs.readFileSync(p.join(root,m),"utf8"));
-  if ("agents" in j) { console.error(`${m}: must not declare an agents key`); bad++; }
-  for (const k of ["skills","hooks","mcpServers"]) {
-    if (!j[k]) { console.error(`${m}: missing ${k}`); bad++; continue; }
-    if (!fs.existsSync(p.join(root,j[k]))) { console.error(`${m}: ${k} -> ${j[k]} missing`); bad++; }
-  }
-}
-process.exit(bad?1:0)'
+# Manifests, MCP dialects, hook copies, listing assets and server.json
+node --test bin/lib/*.test.js
+
+# Runtime and Anthropic directory checks
+claude plugin validate plugins/wave-cxm
 
 # Generated Cursor rules current — CI fails when stale
 node bin/build-cursor-rules.js && node bin/build-cursor-rules.js --check
