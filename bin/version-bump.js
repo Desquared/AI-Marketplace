@@ -18,7 +18,7 @@ import fs from 'fs';
 import path from 'path';
 import { execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
-import { VERSION_MANIFESTS, VERSION_CATALOGS } from './lib/manifest-validate.js';
+import { VERSION_MANIFESTS, VERSION_CATALOGS, VERSION_ROOT_MANIFESTS } from './lib/manifest-validate.js';
 import { releaseLevel, bumpVersion, setJsonVersion, changedPlugins } from './lib/versioning.js';
 
 const repoRoot = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -85,6 +85,9 @@ for (const plugin of changed) {
   for (const file of VERSION_MANIFESTS) update(`${plugins.get(plugin)}/${file}`, (json) => json, version);
   for (const file of VERSION_CATALOGS) {
     update(file, (json) => json.plugins.find((p) => p.name === plugin && p.version !== undefined), version);
+  }
+  for (const file of VERSION_ROOT_MANIFESTS) {
+    update(file, (json) => (json.name === plugin && json.version !== undefined ? json : undefined), version);
   }
 
   console.log(`${plugin}: ${from} -> ${version} (${level})`);
