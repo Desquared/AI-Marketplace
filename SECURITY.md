@@ -16,6 +16,10 @@ Include:
 
 We aim to acknowledge reports within three business days.
 
+When a confirmed vulnerability affects a plugin listed on a third-party
+marketplace or registry, we also notify that marketplace and ship a fix
+through it.
+
 Vulnerabilities in a hosted service a plugin connects to, such as the Wave CXM
 platform, are in scope here too: report them the same way and we will route
 them.

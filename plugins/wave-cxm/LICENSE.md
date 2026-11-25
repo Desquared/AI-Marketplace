@@ -65,15 +65,21 @@ The following are **not** a breach of these restrictions:
 - changing configuration values, settings or environment variables on your
   own installation;
 - automated security scanning, malware analysis and review performed by a
-  Marketplace or by your own organisation; and
+  Marketplace or by your own organisation;
 - an AI client reading the Software into its context window in order to run
-  it as intended.
+  it as intended; and
+- anything GitHub, or another user of GitHub, may do with this public
+  repository under GitHub's Terms of Service, such as viewing it and forking it
+  on GitHub. A fork carries no rights beyond that, and no licence to use the
+  Software outside GitHub other than under Section 2.
 
 ## 5. Services and other terms
 
 This license covers the Software only. Your access to and use of any Service is
 governed by that Service's own terms of service and privacy policy, and nothing
-in this license grants access to a Service. Metadata that Desquared submits to a
+in this license grants access to a Service. The Wave CXM terms of service are
+at [TO BE COMPLETED: Wave CXM terms of service URL] and its privacy policy is at
+[TO BE COMPLETED: Wave CXM privacy policy URL]. Metadata that Desquared submits to a
 registry under that registry's own terms (for example, a public-domain
 dedication) is governed by those terms.
 
@@ -81,7 +87,9 @@ dedication) is governed by those terms.
 
 This license grants no right to use the names, logos or trademarks of
 Desquared or Wave CXM, except as needed to describe the origin of the Software
-truthfully.
+truthfully. A Marketplace may display the names and logos that Desquared
+supplies with a listing, to identify, list and promote the Software on that
+Marketplace, and as its publisher terms accepted by Desquared allow.
 
 ## 7. Ownership and feedback
 

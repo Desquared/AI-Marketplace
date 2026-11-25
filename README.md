@@ -86,6 +86,16 @@ unmodified copies, but you may not modify, redistribute or resell them, or use
 them to train AI models. The hosted services the plugins connect to are governed
 by their own terms of service.
 
+Each plugin's README says what it sends where, and links the privacy policy and
+terms of the service it connects to.
+
 ## Security
 
 See [SECURITY.md](SECURITY.md) to report a vulnerability.
+
+## Trademarks
+
+Claude Code, GitHub Copilot, Codex, Cursor and the other client names in this
+repository are trademarks of their respective owners. They are used only to say
+which clients the plugins work with; this marketplace is not affiliated with or
+endorsed by them.

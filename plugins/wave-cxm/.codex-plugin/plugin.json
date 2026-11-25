@@ -8,6 +8,7 @@
     "email": "engineering@desquared.com"
   },
   "repository": "https://github.com/Desquared/AI-Marketplace",
+  "homepage": "https://go.wavecxm.com",
   "keywords": ["wave-cxm", "loyalty", "mcp", "cxm", "campaigns", "coupons", "rewards", "tenant"],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
@@ -17,6 +18,7 @@
     "shortDescription": "Verify, diagnose and author Wave CXM loyalty configuration",
     "longDescription": "Connects to the Wave CXM loyalty platform through two MCP connectors — production, which is read-only by construction, and stage, which also accepts allow-listed writes. Ships skills for pre-launch configuration verification, evidence-led troubleshooting, tenant orientation with permission-gap reporting, and guided authoring on stage.",
     "developerName": "Desquared",
+    "websiteURL": "https://go.wavecxm.com",
     "category": "Productivity",
     "capabilities": ["Read", "Write"]
   }

@@ -81,6 +81,33 @@ Replace `Acme` with one of the tenants the previous answer listed.
 
 **The consent screen offers nothing to grant.** You have no permissions in any tenant on that environment, or you are signed in with the wrong account.
 
+## What the plugin runs, sends and fetches
+
+- **Network.** The plugin connects to two endpoints and nothing else: `https://api.wavecxm.com/mcp` (production) and `https://stage.api.wavecxm.com/mcp` (stage). Your assistant sends them the tool calls it decides to make, with their arguments (tenant, record type, filters, and for stage writes the fields being set). Sign-in goes through the Wave CXM OAuth flow in your browser.
+- **Local commands.** The only hooks print a fixed reminder before and after the three stage write tools. They run no scripts, read no files and make no network calls.
+- **Skills and rules.** Plain instructions to the assistant. They contain no code and no credentials.
+- **No telemetry.** The plugin itself collects nothing, stores nothing and sends nothing to Desquared beyond the MCP calls above.
+
+## Privacy and data
+
+The plugin is a client. The data it reaches lives in the Wave CXM service, which processes it as described in the Wave CXM privacy policy: [TO BE COMPLETED: Wave CXM privacy policy URL]. That policy covers what the MCP servers log, how long they keep it, and how to ask for deletion.
+
+- **Your sign-in** gives the assistant your own role in the tenants you choose, and nothing more. Revoke it any time from **Authorized apps** in Wave CXM.
+- **Tool results enter your AI client.** Whatever the MCP servers return is placed in the assistant's context and handled by your AI client provider under that provider's own terms and privacy policy, not Desquared's. Check them before querying personal data.
+- **Personal data.** Loyalty records can include members' personal data. Query only what the task needs, and follow your organisation's data-protection rules for what you paste or keep.
+
+Use of the Wave CXM service is governed by its terms of service: [TO BE COMPLETED: Wave CXM terms of service URL].
+
+## Support
+
+- **Help with the plugin or the service:** [TO BE COMPLETED: support contact address or URL]
+- **Bugs in the plugin:** open an issue in this repository.
+- **Security vulnerabilities:** report privately as described in [SECURITY.md](../../SECURITY.md). Never in a public issue.
+
+## Trademarks
+
+Wave CXM is a Desquared product; see the [license](LICENSE.md) (Section 6) for use of its names and logos. Claude, Claude Code, ChatGPT, Codex, GitHub Copilot, Cursor, Kiro, Gemini, Cline and other product names are trademarks of their respective owners. They are used here only to say which clients the plugin works with, and their use implies no affiliation with or endorsement by those owners.
+
 ## License
 
 Copyright © 2026 Desquared. All rights reserved. Use is governed by the [Desquared Proprietary License](LICENSE.md): you may install and run the plugin as published, but not modify or redistribute it. The hosted Wave CXM service is governed by the Wave CXM terms of service.

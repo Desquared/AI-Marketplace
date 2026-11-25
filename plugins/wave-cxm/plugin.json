@@ -11,5 +11,6 @@
   "skills": "skills/",
   "hooks": "hooks/hooks.json",
   "mcpServers": ".mcp.json",
-  "repository": "https://github.com/Desquared/AI-Marketplace"
+  "repository": "https://github.com/Desquared/AI-Marketplace",
+  "homepage": "https://go.wavecxm.com"
 }
