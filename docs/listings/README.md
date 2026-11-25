@@ -27,7 +27,7 @@ Use these everywhere unless a channel file says otherwise.
 | Support | https://github.com/Desquared/AI-Marketplace/issues |
 | Privacy policy | [TO BE COMPLETED: Wave CXM privacy policy URL] |
 | Terms of service | [TO BE COMPLETED: Wave CXM terms of service URL] |
-| Contact email | engineering@desquared.com |
+| Contact email | raikos@thinkdesquared.com |
 | Keywords | wave-cxm, loyalty, customer-experience, cxm, mcp, campaigns, coupons, rewards, contests, configuration |
 | Icon | [`plugins/wave-cxm/assets/icon.png`](../../plugins/wave-cxm/assets/icon.png) (512×512) |
 | Square logo | [`plugins/wave-cxm/assets/logo-400.png`](../../plugins/wave-cxm/assets/logo-400.png) (400×400) |

@@ -46,17 +46,17 @@
 
 | # | Channel | Finding | Status |
 |---|---|---|---|
-| 1 | Cursor | The marketplace security help page says "All marketplace plugins must be open source." The Publisher Terms §3.3 only bars copyleft components. The plugin is under a proprietary licence. Ask Cursor whether a source-available licence qualifies before submitting. | needs counsel |
-| 2 | Cursor | §3.1: the publisher "will not charge Users any fees, whether directly or indirectly, for access to or use of a Plugin through the Marketplace." Wave CXM is a paid service the plugin connects to. | needs counsel |
-| 3 | Kiro | Power requirement: "Any MCP servers it uses are generally available, not in beta or preview." The stage endpoint is a pre-production environment. | decision |
-| 4 | OpenAI | "only one MCP server can be connected per plugin"; final submission needs "A production HTTPS MCP server URL"; "Trial or demo plugins will not be accepted." Submit production only. | decision |
-| 5 | Anthropic connector | Listing two URLs ("Multiple URLs") can be published "only once it has the Verified label". | decision |
-| 6 | All MCP channels, Anthropic | Anthropic Policy 3F and the connector review criteria require the publisher to own or control the endpoints and that "The MCP server domain should match your service". OpenAI asks that public URLs "identify the same publisher as the submission". The listings are published by Desquared under the Wave CXM name on `wavecxm.com`. Document that Desquared owns the Wave CXM brand and domain, or publish under the entity that does. | needs counsel |
+| 1 | Cursor | The marketplace security help page says "All marketplace plugins must be open source." The Publisher Terms §3.3 only bars copyleft components. The plugin is under a proprietary licence. Ask Cursor whether a source-available licence qualifies before submitting. | **open — blocks Cursor**; Desquared is asking Cursor |
+| 2 | Cursor | §3.1: the publisher "will not charge Users any fees, whether directly or indirectly, for access to or use of a Plugin through the Marketplace." Wave CXM is a paid service the plugin connects to. | **open — blocks Cursor**; asked together with #1 |
+| 3 | Kiro | Power requirement: "Any MCP servers it uses are generally available, not in beta or preview." The stage endpoint is a pre-production environment. | decided 2026-11-25: the stage connector stays in the plugin, because partners build on stage before going live. It is a supported, publicly reachable environment, not a beta of the product. Submit to Kiro as is and answer the reviewer if asked. |
+| 4 | OpenAI | "only one MCP server can be connected per plugin"; final submission needs "A production HTTPS MCP server URL"; "Trial or demo plugins will not be accepted." Submit production only. | resolved: `bin/package-openai.js` builds the OpenAI archive with the production server only and without `author-config` (`bin/openai-overrides/wave-cxm.json`) |
+| 5 | Anthropic connector | Listing two URLs ("Multiple URLs") can be published "only once it has the Verified label". | resolved: the connector listing carries the production URL only; stage reaches users through the plugin |
+| 6 | All MCP channels, Anthropic | Anthropic Policy 3F and the connector review criteria require the publisher to own or control the endpoints and that "The MCP server domain should match your service". OpenAI asks that public URLs "identify the same publisher as the submission". The listings are published by Desquared under the Wave CXM name on `wavecxm.com`. Document that Desquared owns the Wave CXM brand and domain, or publish under the entity that does. | evidence: `wavecxm.com` footer reads "Wave CXM is crafted with ♥ by Desquared" and links to thinkdesquared.com; DNS control is proven by the MCP Registry TXT record and the OpenAI domain token. WHOIS is privacy-redacted. Add a trademark registration if one exists. |
 | 7 | Anthropic plugin | A plugin `name` or `author.name` that "matches a known brand" not owned by the submitter is held for review. Same root cause as #6. | needs counsel |
 | 8 | Licence §4(4) vs channel terms | The licence bars using the Software to train AI models. GitHub ToS D.4 lets GitHub use repository content to train models; OpenAI's App Developer Terms §1.3 let OpenAI use App Requests and Responses to "improve our Services"; the MCP Registry dedicates metadata to CC0. The licence now carves out GitHub's rights explicitly (see [changes](#changes-made-in-this-repository)) and defers to accepted marketplace terms (Section 3). | needs counsel |
 | 9 | Licence §8 vs channel terms | The licence is revocable "at any time". Kiro §1(f) requires supporting existing users for 90 days after removal; Cursor §7.3 lets existing installs keep working. | needs counsel |
-| 10 | awesome-copilot | Automated gates require a root `plugin.json` in the Agent Plugins v1.0.0 format (`$schema` set, only `name, version, description, author, homepage, repository, license, keywords, extensions` at top level) and fail on anything else. The shared `plugin.json` declares `skills`, `hooks` and `mcpServers`. Format, not legal; listed because it blocks the channel. | decision |
-| 11 | Gemini CLI | `gemini-extension.json` must be "in the absolute root of the repository or the release archive". This repository is a multi-plugin marketplace. Format, not legal. | decision |
+| 10 | awesome-copilot | Automated gates require a root `plugin.json` in the Agent Plugins v1.0.0 format (`$schema` set, only `name, version, description, author, homepage, repository, license, keywords, extensions` at top level) and fail on anything else. Format, not legal. | met: `plugins/wave-cxm/plugin.json` is Agent Plugins v1.0.0 with only the allowed top-level fields; MCP servers are in `mcp.json` |
+| 11 | Gemini CLI | `gemini-extension.json` must be "in the absolute root of the repository or the release archive". This repository is a multi-plugin marketplace. Format, not legal. | met: `gemini-extension.json` and `GEMINI.md` sit at the root for `wave-cxm`; the `gemini-cli-extension` topic is set. A second plugin would need its own repository. |
 | 12 | copilot-plugins | No public submission route: the repository is "now an ordinary, non-default marketplace" and every entry is GitHub- or Microsoft-owned. | unverified |
 | 13 | Smithery | Smithery shut down its proxy, accounts, CLI and API on 2026-10-31 and is now a curated, non-proxied registry. `smithery.ai/new`, `/terms` and `/privacy` return 404. No self-serve listing route. | unverified |
 | 14 | Official MCP Registry | Publishers must "Be at least 18 years old", and whoever runs `mcp-publisher` for Desquared "represent[s] and warrant[s]" authority to bind it. Metadata is dedicated to the public domain under CC0, "perpetual, irrevocable". | needs counsel |
@@ -82,15 +82,16 @@ Placeholders in the repository are marked `[TO BE COMPLETED: …]`.
       Cursor §4.2. Placeholders: `LICENSE.md` §5, `plugins/wave-cxm/README.md`.
 - [ ] **Support contact**, monitored. Required by Anthropic 3B, OpenAI, Kiro
       README, Cursor §4.4. The README and manifests point to this repository's
-      GitHub issues today. Confirm that is acceptable for each channel, or
-      supply an address; the Anthropic connector form asks for a support
-      contact.
-- [ ] **Security contact address.** Anthropic Terms require "a mechanism for
-      receiving reports of security vulnerabilities". Placeholder:
-      `SECURITY.md`. Enable GitHub private vulnerability reporting on the
-      repository as well.
-- [ ] **Licensing contact address.** Placeholder: `LICENSE.md` → Contact.
-- [ ] **Governing law and jurisdiction.** Placeholder: `LICENSE.md` §11.
+      GitHub issues today; raikos@thinkdesquared.com is the contact email in
+      every manifest and form.
+- [x] **Security contact address:** raikos@thinkdesquared.com, in
+      `SECURITY.md`. Anthropic Terms require "a mechanism for receiving
+      reports of security vulnerabilities". GitHub private vulnerability
+      reporting is enabled on the repository.
+- [x] **Licensing contact address:** raikos@thinkdesquared.com, in
+      `LICENSE.md` → Contact.
+- [x] **Governing law and jurisdiction:** Greece; courts of Athens, in
+      `LICENSE.md` §11. Counsel to confirm with the rest of the licence.
 
 ### Decisions and legal review
 

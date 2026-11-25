@@ -2,7 +2,7 @@
   "name": "desquared",
   "owner": {
     "name": "Desquared",
-    "email": "engineering@desquared.com"
+    "email": "raikos@thinkdesquared.com"
   },
   "metadata": {
     "description": "Desquared public plugins for AI assistants, starting with the Wave CXM loyalty platform."
@@ -12,10 +12,10 @@
       "name": "wave-cxm",
       "source": "./plugins/wave-cxm",
       "description": "Wave CXM loyalty platform integration: a read-only production connector, a read/write stage connector, and skills to verify, diagnose, map and author loyalty configuration.",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "author": {
         "name": "Desquared",
-        "email": "engineering@desquared.com",
+        "email": "raikos@thinkdesquared.com",
         "url": "https://github.com/Desquared"
       },
       "repository": "https://github.com/Desquared/AI-Marketplace",

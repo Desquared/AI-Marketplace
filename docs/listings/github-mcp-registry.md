@@ -30,7 +30,8 @@ Subject: MCP Registry listing request: Wave CXM (`com.wavecxm/mcp`)
 > A reviewer account is available on request.
 >
 > Thank you,
-> [TO BE COMPLETED: sender name and role]
+> Alexandros Raikos, Backend Engineer, Desquared
+> raikos@thinkdesquared.com
 
 `server.json` already sets the display name GitHub shows
 (`_meta → io.modelcontextprotocol.registry/publisher-provided → com.github →

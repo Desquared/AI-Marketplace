@@ -1,11 +1,11 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "wave-cxm",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Wave CXM loyalty platform integration: a read-only production connector, a read/write stage connector, and skills to verify, diagnose, map and author loyalty configuration.",
   "author": {
     "name": "Desquared",
-    "email": "engineering@desquared.com",
+    "email": "raikos@thinkdesquared.com",
     "url": "https://github.com/Desquared"
   },
   "homepage": "https://go.wavecxm.com",

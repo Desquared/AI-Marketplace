@@ -1,0 +1,10 @@
+{
+  "$comment": "OpenAI connects one MCP server per plugin and needs a production URL, so the OpenAI archive carries the production connector only. Read by bin/package-openai.js.",
+  "keepMcpServers": ["wave-cxm"],
+  "excludeSkills": ["author-config"],
+  "description": "Wave CXM loyalty platform integration: a read-only production connector and skills to verify, diagnose and map loyalty configuration.",
+  "interface": {
+    "capabilities": ["Read"],
+    "longDescription": "Connects to the Wave CXM loyalty platform through its production MCP connector, which is read-only because it has no write tools. Skills verify configuration before it goes live, diagnose why a rule, contest or benefit misbehaved from what actually happened, and map an unfamiliar tenant including what your permissions hide. Every request is scoped to the tenants and permissions you grant when you sign in."
+  }
+}

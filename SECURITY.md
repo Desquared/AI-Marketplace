@@ -3,7 +3,7 @@
 Please **do not** report security vulnerabilities through public GitHub issues,
 discussions or pull requests.
 
-Report them privately to **[TO BE COMPLETED: security contact address]**, or
+Report them privately to **raikos@thinkdesquared.com**, or
 through GitHub's [private vulnerability reporting](../../security/advisories/new)
 for this repository.
 
