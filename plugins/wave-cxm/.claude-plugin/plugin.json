@@ -1,7 +1,7 @@
 {
   "name": "wave-cxm",
   "description": "Wave CXM loyalty platform integration — two MCP connectors (production read-only, stage read/write) plus skills for pre-launch config verification, troubleshooting, tenant orientation, and guided authoring.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "LicenseRef-Desquared-Proprietary",
   "author": {
     "name": "Desquared"
