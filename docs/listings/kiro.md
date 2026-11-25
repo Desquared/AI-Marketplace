@@ -22,7 +22,7 @@ no field for a subfolder, so name the folder in the description.
 | Resource type | Power |
 | Name | Wave CXM |
 | Organization | Desquared |
-| Email | engineering@desquared.com |
+| Email | raikos@thinkdesquared.com |
 | Use case (3–4 words) | Loyalty configuration review |
 | GitHub repository | https://github.com/Desquared/AI-Marketplace (power in `plugins/wave-cxm`) |
 | Logo | `plugins/wave-cxm/assets/icon.png`. Kiro prefers SVG or EPS; PNG accepted, ≤5 MB |

@@ -120,10 +120,10 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR ITS USE.
 
 ## 11. Governing law
 
-[TO BE COMPLETED BY COUNSEL: governing law and jurisdiction.]
+This license is governed by the laws of Greece. The courts of Athens, Greece,
+have exclusive jurisdiction over any dispute arising from it.
 
 ## Contact
 
 For licensing questions, or permission to use the Software in ways this
-license does not allow, contact Desquared at [TO BE COMPLETED: licensing
-contact address].
+license does not allow, contact Desquared at raikos@thinkdesquared.com.

@@ -12,8 +12,13 @@ node bin/package-openai.js wave-cxm \
 
 It writes `build/wave-cxm-<version>-openai.zip`: the plugin folder without
 `hooks/`, without `com.github.copilot/`, and without the `hooks` field in
-`.codex-plugin/plugin.json`, with the two URLs added to its `interface`. The
-plugin's skills restate the stage write guard, so nothing is lost.
+`.codex-plugin/plugin.json`, with the two URLs added to its `interface`.
+
+OpenAI connects one MCP server per plugin, and it must be production, so
+[`bin/openai-overrides/wave-cxm.json`](../../bin/openai-overrides/wave-cxm.json)
+trims the archive further: only the `wave-cxm` production server, no
+`author-config` skill, `capabilities: ["Read"]`, and a production-only
+description. Stage stays available in every other channel.
 
 ## Fields
 
@@ -26,7 +31,7 @@ Taken from `.codex-plugin/plugin.json` → `interface`:
 | `longDescription` | ≤4,000 | See the manifest |
 | `developerName` | ≤80 | Desquared (replaced by the verified developer identity) |
 | `category` | enum | Business & Operations |
-| `capabilities` | ≤20 | Read, Write |
+| `capabilities` | ≤20 | Read (set by the overrides file) |
 | `websiteURL` | HTTPS | https://go.wavecxm.com |
 | `supportURL` | HTTPS | https://github.com/Desquared/AI-Marketplace/issues |
 | `privacyPolicyURL` | HTTPS | Added by the packaging script |

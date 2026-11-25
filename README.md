@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="plugins/wave-cxm/assets/icon.png" alt="Wave CXM" width="96" height="96">
+  <img src="assets/desquared-monogram.svg" alt="Desquared" width="74" height="96">
 </p>
 
 <h1 align="center">Desquared Marketplace</h1>

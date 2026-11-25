@@ -5,7 +5,7 @@
   "description": "Wave CXM loyalty platform integration: a read-only production connector, a read/write stage connector, and skills to verify, diagnose, map and author loyalty configuration.",
   "author": {
     "name": "Desquared",
-    "email": "engineering@desquared.com",
+    "email": "raikos@thinkdesquared.com",
     "url": "https://github.com/Desquared"
   },
   "homepage": "https://go.wavecxm.com",

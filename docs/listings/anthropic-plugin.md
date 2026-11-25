@@ -26,7 +26,7 @@ two warnings: the privacy and terms URLs are placeholders.
    icon: it is taken only on the first save.
 4. **Data handling:** the plugin sends tool calls and the user's OAuth token to
    `api.wavecxm.com` and `stage.api.wavecxm.com`; it stores nothing locally.
-5. **Compliance:** contact `engineering@desquared.com`, four acknowledgements.
+5. **Compliance:** contact `raikos@thinkdesquared.com`, four acknowledgements.
 6. **Updates:** choose the GitHub push webhook so `main` reaches the listing.
 
 ## Reviewer notes
