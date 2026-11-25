@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "wave-cxm": {
+      "type": "http",
+      "url": "https://api.wavecxm.com/mcp"
+    },
+    "wave-cxm-stage": {
+      "type": "http",
+      "url": "https://stage.api.wavecxm.com/mcp"
+    }
+  }
+}

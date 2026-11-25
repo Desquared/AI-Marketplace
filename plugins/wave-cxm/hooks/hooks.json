@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__wave-cxm-stage__(create|update|delete)_entity|mcp_wave-cxm-stage_(create|update|delete)_entity|wave-cxm-stage_(create|update|delete)_entity",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf 'Wave CXM stage write guard: call describe_write first — never guess a payload. Echo the connector, the tenant name AND id, and every field being set or changed, then wait for approval. A delete needs explicit human confirmation and confirm: true.\\n'"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "mcp__wave-cxm-stage__(create|update|delete)_entity|mcp_wave-cxm-stage_(create|update|delete)_entity|wave-cxm-stage_(create|update|delete)_entity",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf 'Wave CXM stage write complete. Read the entity back with get-entity, report any difference from what you sent, note whether it is active, and link it with get_url — tenant printed beside the link.\\n'"
+          }
+        ]
+      }
+    ]
+  }
+}

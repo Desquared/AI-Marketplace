@@ -1,0 +1,87 @@
+name: version
+
+# Every PR that changes a plugin carries its own version bump, so the update is
+# on main (and visible to `claude plugin update`) the moment the PR merges.
+# bin/version-bump.js sets each changed plugin to one level above its version on
+# the base branch: a `release:none|patch|minor|major` label decides the level,
+# otherwise the PR title does (`!` → major, `feat` → minor, anything else → patch).
+#
+# The bump is pushed with RELEASE_BOT_TOKEN, the repository's single
+# automation token; it needs Contents: Read and write on this repository.
+# Pushes made with the default GITHUB_TOKEN do not start workflows, which would
+# leave the bump commit without checks.
+#
+# Make the `bump` job a required check: it passes once versions are current.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited, labeled, unlabeled]
+
+concurrency:
+  group: version-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    env:
+      BASE_REF: ${{ github.base_ref }}
+      HEAD_REF: ${{ github.head_ref }}
+      HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+      PR_TITLE: ${{ github.event.pull_request.title }}
+      PR_LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+      CAN_PUSH: ${{ secrets.RELEASE_BOT_TOKEN != '' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+          token: ${{ secrets.RELEASE_BOT_TOKEN || github.token }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Bump changed plugins
+        run: |
+          git fetch --no-tags "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git" "$BASE_REF:refs/remotes/base/$BASE_REF"
+          node bin/version-bump.js "base/$BASE_REF" | tee "$RUNNER_TEMP/bump.txt"
+
+      - name: Push the bump
+        run: |
+          if git diff --quiet; then
+            echo "Versions are current."
+            exit 0
+          fi
+          # Explains why the bump could not be pushed and how to apply it by hand.
+          fail() {
+            git diff
+            {
+              echo "### Plugin versions need a bump"
+              echo "$1"
+              echo
+              echo '```'
+              cat "$RUNNER_TEMP/bump.txt"
+              echo '```'
+              echo "Apply it on the branch, then commit and push:"
+              echo '```bash'
+              echo "PR_TITLE='<PR title>' node bin/version-bump.js origin/$BASE_REF"
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "::error title=Version bump not pushed::$1 Run: PR_TITLE='<PR title>' node bin/version-bump.js origin/$BASE_REF, then commit and push."
+            exit 1
+          }
+          if [ "$HEAD_REPO" != "$GITHUB_REPOSITORY" ]; then
+            fail "This PR comes from a fork ($HEAD_REPO), and the workflow cannot push to it."
+          fi
+          if [ "$CAN_PUSH" != "true" ]; then
+            fail "The RELEASE_BOT_TOKEN secret is not available to this repository, so the workflow has no token that can push."
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "release: bump plugin versions" -m "$(cat "$RUNNER_TEMP/bump.txt")"
+          git push origin "HEAD:$HEAD_REF" ||
+            fail "Pushing to $HEAD_REF was rejected: RELEASE_BOT_TOKEN needs Contents: Read and write on $GITHUB_REPOSITORY, and branch protection must allow the push."
