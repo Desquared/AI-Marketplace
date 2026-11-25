@@ -37,10 +37,14 @@ jobs:
               ".github/plugin/marketplace.json",
               ".agents/plugins/marketplace.json",
               ".cursor-plugin/marketplace.json",
+              "gemini-extension.json",
               "bin/package.json",
             ];
             for (const p of plugins) {
-              for (const f of ["plugin.json", ".claude-plugin/plugin.json", ".codex-plugin/plugin.json", ".mcp.json"]) {
+              for (const f of [
+                "plugin.json", ".claude-plugin/plugin.json", ".codex-plugin/plugin.json", ".cursor-plugin/plugin.json",
+                ".mcp.json", "mcp.json", "server.json", "hooks/hooks.json", "com.github.copilot/hooks/hooks.json",
+              ]) {
                 const full = path.join(p, f);
                 if (fs.existsSync(full)) json.push(full);
               }
@@ -82,7 +86,7 @@ jobs:
               if (!fs.existsSync(lic) || !fs.readFileSync(lic).equals(root)) {
                 console.error(`${lic} must be a byte-identical copy of LICENSE.md`); bad++;
               }
-              for (const f of ["plugin.json", ".claude-plugin/plugin.json", ".codex-plugin/plugin.json"]) {
+              for (const f of ["plugin.json", ".claude-plugin/plugin.json", ".codex-plugin/plugin.json", ".cursor-plugin/plugin.json"]) {
                 const full = path.join(p, f);
                 if (!fs.existsSync(full)) continue;
                 if (JSON.parse(fs.readFileSync(full, "utf8")).license !== SPDX) {
