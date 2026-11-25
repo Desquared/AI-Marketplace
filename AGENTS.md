@@ -27,6 +27,10 @@ Every change must hold to these rules; reviewers block on them.
 
 The `checks` workflow enforces the last two.
 
+Before submitting to a marketplace or registry, check
+[`docs/legal/distribution-requirements.md`](docs/legal/distribution-requirements.md)
+for what that channel's terms require of the publisher.
+
 ### Why the license grants marketplace rights
 
 The [license](LICENSE.md) is proprietary but explicitly lets listed marketplaces

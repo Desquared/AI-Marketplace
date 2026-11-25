@@ -10,7 +10,7 @@
       "displayName": "Wave CXM",
       "source": "./plugins/wave-cxm",
       "description": "Wave CXM loyalty platform integration: a read-only production connector, a read/write stage connector, and skills to verify, diagnose, map and author loyalty configuration.",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "author": {
         "name": "Desquared",
         "url": "https://github.com/Desquared"

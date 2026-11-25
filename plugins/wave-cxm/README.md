@@ -81,6 +81,7 @@ Replace `Acme` with a tenant from the previous answer.
 - **Network:** HTTPS requests to `api.wavecxm.com` and `stage.api.wavecxm.com` only, through the MCP streamable HTTP transport (POST), and the Wave CXM sign-in pages your browser opens.
 - **Data sent:** the tool calls your assistant makes (tenant, entity type, filters, and for stage writes the fields being set) with your OAuth access token.
 - **Hooks:** two non-blocking reminders on the stage write tools. Each prints a line of text and runs no other program.
+- **Skills and rules:** plain instructions to the assistant, with no code and no credentials.
 - **Nothing else:** no telemetry, no local files written, no environment variables read.
 
 ## Troubleshooting
@@ -97,9 +98,19 @@ Replace `Acme` with a tenant from the previous answer.
 
 ## Support, privacy and terms
 
-- **Support:** [open an issue](https://github.com/Desquared/AI-Marketplace/issues). For security issues, follow [SECURITY.md](../../SECURITY.md).
+- **Support:** [open an issue](https://github.com/Desquared/AI-Marketplace/issues). For security issues, follow [SECURITY.md](../../SECURITY.md); never report them in a public issue.
 - **Privacy:** [TO BE COMPLETED: link to the Wave CXM privacy policy]
 - **Terms:** [TO BE COMPLETED: link to the Wave CXM terms of service]
+
+The plugin is a client. The data it reaches lives in the Wave CXM service, which processes it as described in the Wave CXM privacy policy, including what the MCP servers log, how long they keep it, and how to ask for deletion.
+
+- **Your sign-in** gives the assistant your own role in the tenants you choose, and nothing more. Revoke it any time from **Authorized apps** in Wave CXM.
+- **Tool results enter your AI client.** Whatever the MCP servers return is placed in the assistant's context and handled by your AI client provider under that provider's own terms and privacy policy, not Desquared's. Check them before querying personal data.
+- **Personal data.** Loyalty records can include members' personal data. Query only what the task needs, and follow your organisation's data-protection rules for what you paste or keep.
+
+## Trademarks
+
+Wave CXM is a Desquared product; see the [license](LICENSE.md) (Section 6) for use of its names and logos. Claude, Claude Code, ChatGPT, Codex, GitHub Copilot, Cursor, Kiro, Gemini, Cline and other product names are trademarks of their respective owners. They are used here only to say which clients the plugin works with, and their use implies no affiliation with or endorsement by those owners.
 
 ## License
 
