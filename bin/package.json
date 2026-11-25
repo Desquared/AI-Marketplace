@@ -1,0 +1,22 @@
+{
+  "name": "@desquared/rules-installer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "install-rules": "install-rules.js"
+  },
+  "scripts": {
+    "start": "node install-rules.js",
+    "test": "node --test lib/*.test.js",
+    "build:cursor-rules": "node build-cursor-rules.js",
+    "check:cursor-rules": "node build-cursor-rules.js --check"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "inquirer": "^9.2.17"
+  }
+}

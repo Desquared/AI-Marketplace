@@ -1,0 +1,90 @@
+---
+description: Use when a Wave CXM entity is not behaving as expected — a rule not firing, a contest awarding nothing, a customer not receiving a benefit — and you need the cause from what actually happened.
+globs:
+alwaysApply: false
+---
+# Diagnose a Wave CXM Issue
+
+Find out why something did not do what it was supposed to. This skill works backwards from a symptom to a cause, using records of what the platform actually did — not what its configuration says it should do.
+
+Use the `wave-cxm-context` skill first for connector selection, tenant resolution, the empty-result rule, and the tool traps in its gated-data section. Several of those traps produce confidently wrong diagnoses, so they are not optional reading here.
+
+## Discriminator
+
+This skill is **retrospective** and **evidence-led**. It starts from an observed symptom and reads what happened.
+
+If the question is "is this set up correctly" — nothing has misbehaved yet, someone wants a pre-launch review — use `verify-config` instead. If no specific entity or customer is named, use `tenant-map`.
+
+Configuration inspection is part of diagnosis, but it is the *second* step here, not the first. Reading config first invites confirmation bias: config that looks wrong is not necessarily what caused this symptom, and config that looks right does not mean nothing broke.
+
+## Output header
+
+```
+Environment: production (wave-cxm) · Tenant: Acme (64f0c2a1b3d4e5f6a7b8c9d0)
+```
+
+## Procedure
+
+### 1. Pin down the symptom
+
+Establish, in concrete terms, what was expected and what happened instead. Which customer, which entity, roughly when. A diagnosis without a specific instance to trace is guesswork — ask for one.
+
+### 2. Read the evidence trail
+
+This is the heart of the skill. Query what the platform recorded:
+
+| Question | Where the answer is |
+|:---------|:--------------------|
+| Did the triggering event arrive, and what status did it reach? | `BaseEvent` |
+| Did the rule fire, and what did it grant? | `RuleApplication` |
+| What was actually granted to this customer? | `BenefitLedger` — the authoritative per-customer record |
+| Was currency collected, and is it still available? | `RewardAccount`, `CurrencyCollection` |
+| Did a redemption go through, or is it still held? | `RedemptionOptionApplication`, `RedemptionReservation` |
+| Did the customer get into the contest or game? | `Participation`, `ContestWinner`, `MiniGameSession` |
+| Was the notification sent? | `NotificationRecord` |
+| Did the webhook reach our system? | `WebhookRequest` |
+
+`RuleApplication` present but `BenefitLedger` empty is a very different problem from neither existing. Establish which before theorising.
+
+### 3. Check event status before blaming configuration
+
+**Only a `completed` event has granted its benefits.** An event can sit in `draft`, `pending`, `check only`, or `pending approval` and have granted nothing — while looking, at a glance, as though it arrived fine.
+
+Its event configuration sets the completion method: **immediate**, **delayed automatic**, or **manual**. A manual-completion event type that nobody completed is not a broken rule. Check the event's status and its type's completion method before going anywhere near the rule.
+
+Also worth ruling out early: an event rejected as a duplicate. An event carrying an external reference is rejected on resubmission of the same reference for the same type, unless the type allows resubmission.
+
+### 4. Check current eligibility
+
+`check-entity` reports whether the entity is usable by this customer right now, and the `errors` explaining any failure.
+
+Three traps from the context skill apply directly, and each one produces a false diagnosis:
+
+- **Pass the tenant-facing external customer id, never the Wave `_id` / `waveCustomerId`.** An `_id` reports a real customer as not found — which reads exactly like a missing customer.
+- **Only ACTIVE entities are checked.** "Not found" means "no such id **or** the entity is not active". Read the entity back with `get-entity` before concluding the id is wrong; an inactive rule is a cause, not a lookup failure.
+- **The coupon check is context-free.** No basket, no shop — so purchase-dependent conditions report as unmet. That is the check's limit, not the coupon's fault. Say so.
+
+### 5. Inspect the configuration and its graph
+
+Now read it. `get-entity` for the record, `get-associations` for what it depends on — deduplicated per the context skill. Check `status` and `archived` at every node, since a live rule pointing at an archived coupon group fails silently.
+
+### 6. Reproduce as a dry run
+
+`describe-preview` for the event body, then `preview-event` to see what the event *would* produce today. `checkOnly` is forced true and nothing is persisted — state that in the output so nobody thinks you submitted a real event. Requires the matching `Create*Events` permission, and not every event type can be dry-run.
+
+A dry run that produces the expected benefit while the real event did not is strong evidence the cause is upstream: the event never arrived, arrived with a different payload, or never completed.
+
+### 7. Check who changed what
+
+`audit-entity` gives the change history — acting user, timestamp, and the *names* of changed fields. "This worked last week" plus an update the day it stopped is usually the whole answer. It needs `User:ViewUserEvents`, and it does not carry before/after values — send the reader to the admin panel for those.
+
+## Output
+
+Report:
+
+1. **Cause** — one sentence. If there are several contributing causes, rank them.
+2. **Evidence** — the specific records that support it, with ids. A diagnosis without evidence is a guess wearing a suit.
+3. **Fix** — what to change, and where. Link it with `get_url`, tenant printed beside the link.
+4. **Ruled out** — what you checked and eliminated. This is what makes the report trustworthy and stops the next person redoing your work.
+
+**When you cannot determine the cause, say so.** List what was ruled out, and name what evidence was unavailable and why — a missing permission, a redacted field, an event outside the retention you can see. Per the empty-result rule, never let a permission gap masquerade as a finding. An honest "not determined, here is what is eliminated and what I could not see" is a useful result; a confident wrong cause is not.

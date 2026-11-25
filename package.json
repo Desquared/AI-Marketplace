@@ -1,0 +1,11 @@
+{
+  "name": "ai-marketplace",
+  "private": true,
+  "description": "Desquared public plugin marketplace.",
+  "license": "LicenseRef-Desquared-Proprietary",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Desquared/AI-Marketplace.git"
+  },
+  "workspaces": []
+}

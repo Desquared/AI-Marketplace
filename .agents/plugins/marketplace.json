@@ -1,0 +1,19 @@
+{
+  "name": "desquared",
+  "interface": {
+    "displayName": "Desquared"
+  },
+  "plugins": [
+    {
+      "name": "wave-cxm",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/Desquared/AI-Marketplace.git",
+        "path": "./plugins/wave-cxm",
+        "ref": "main"
+      },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Productivity"
+    }
+  ]
+}

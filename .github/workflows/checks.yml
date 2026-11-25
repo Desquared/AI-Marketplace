@@ -1,0 +1,98 @@
+name: checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # These steps use Node built-ins only, so there is nothing to install.
+      - name: Transform unit tests
+        run: node --test bin/lib/*.test.js
+
+      - name: Plugin unit tests
+        run: find plugins -name '*.test.js' -not -path '*/node_modules/*' -print0 | xargs -0 node --test
+
+      - name: Generated Cursor rules are current
+        run: node bin/build-cursor-rules.js --check
+
+      - name: Manifests and catalogs parse, and every skill declares itself
+        run: |
+          node --input-type=module -e '
+            import fs from "fs";
+            import path from "path";
+            import { pluginDirs } from "./bin/lib/plugin-dirs.js";
+            const plugins = [...pluginDirs(".").values()];
+            const json = [
+              ".claude-plugin/marketplace.json",
+              ".github/plugin/marketplace.json",
+              ".agents/plugins/marketplace.json",
+              ".cursor-plugin/marketplace.json",
+              "bin/package.json",
+            ];
+            for (const p of plugins) {
+              for (const f of ["plugin.json", ".claude-plugin/plugin.json", ".codex-plugin/plugin.json", ".mcp.json"]) {
+                const full = path.join(p, f);
+                if (fs.existsSync(full)) json.push(full);
+              }
+            }
+            for (const f of json) JSON.parse(fs.readFileSync(f, "utf8"));
+            console.log(`${json.length} JSON files parse`);
+
+            let bad = 0;
+            for (const p of plugins) {
+              const dir = path.join(p, "skills");
+              if (!fs.existsSync(dir)) continue;
+              for (const s of fs.readdirSync(dir)) {
+                const f = path.join(dir, s, "SKILL.md");
+                if (!fs.existsSync(f)) continue;
+                const t = fs.readFileSync(f, "utf8");
+                const m = /^---\n([\s\S]*?)\n---\n/.exec(t);
+                if (!m) { console.error(`frontmatter must start at line 1: ${f}`); bad++; continue; }
+                const name = /^name: (.+)$/m.exec(m[1]);
+                if (!name) { console.error(`missing name: ${f}`); bad++; continue; }
+                if (!/^description: /m.test(m[1])) { console.error(`missing description: ${f}`); bad++; }
+                if (name[1].trim() !== s) { console.error(`name does not match directory: ${f}`); bad++; }
+              }
+            }
+            if (bad) process.exit(1);
+            console.log("every skill declares a matching name and a description");
+          '
+
+      - name: Every plugin ships the root license and declares it
+        run: |
+          node --input-type=module -e '
+            import fs from "fs";
+            import path from "path";
+            import { pluginDirs } from "./bin/lib/plugin-dirs.js";
+            const SPDX = "LicenseRef-Desquared-Proprietary";
+            const root = fs.readFileSync("LICENSE.md");
+            let bad = 0;
+            for (const p of pluginDirs(".").values()) {
+              const lic = path.join(p, "LICENSE.md");
+              if (!fs.existsSync(lic) || !fs.readFileSync(lic).equals(root)) {
+                console.error(`${lic} must be a byte-identical copy of LICENSE.md`); bad++;
+              }
+              for (const f of ["plugin.json", ".claude-plugin/plugin.json", ".codex-plugin/plugin.json"]) {
+                const full = path.join(p, f);
+                if (!fs.existsSync(full)) continue;
+                if (JSON.parse(fs.readFileSync(full, "utf8")).license !== SPDX) {
+                  console.error(`${full} must declare "license": "${SPDX}"`); bad++;
+                }
+              }
+            }
+            if (JSON.parse(fs.readFileSync("package.json", "utf8")).license !== SPDX) {
+              console.error(`package.json must declare "license": "${SPDX}"`); bad++;
+            }
+            if (bad) process.exit(1);
+            console.log("every plugin carries the root license and declares it");
+          '
