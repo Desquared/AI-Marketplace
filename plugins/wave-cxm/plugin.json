@@ -1,16 +1,15 @@
 {
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "wave-cxm",
-  "description": "Wave CXM loyalty platform integration — two MCP connectors (production read-only, stage read/write) plus skills for pre-launch config verification, troubleshooting, tenant orientation, and guided authoring.",
-  "version": "1.0.2",
-  "license": "LicenseRef-Desquared-Proprietary",
+  "version": "1.1.0",
+  "description": "Wave CXM loyalty platform integration: a read-only production connector, a read/write stage connector, and skills to verify, diagnose, map and author loyalty configuration.",
   "author": {
     "name": "Desquared",
-    "email": "engineering@desquared.com"
+    "email": "engineering@desquared.com",
+    "url": "https://github.com/Desquared"
   },
-  "keywords": ["wave-cxm", "loyalty", "mcp", "cxm", "campaigns", "coupons", "rewards", "tenant"],
-  "skills": "skills/",
-  "hooks": "hooks/hooks.json",
-  "mcpServers": ".mcp.json",
+  "homepage": "https://go.wavecxm.com",
   "repository": "https://github.com/Desquared/AI-Marketplace",
-  "homepage": "https://go.wavecxm.com"
+  "license": "LicenseRef-Desquared-Proprietary",
+  "keywords": ["wave-cxm", "loyalty", "customer-experience", "cxm", "mcp", "campaigns", "coupons", "rewards", "contests", "configuration"]
 }

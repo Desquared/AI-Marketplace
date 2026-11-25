@@ -1,25 +1,36 @@
 {
   "name": "wave-cxm",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "license": "LicenseRef-Desquared-Proprietary",
-  "description": "Wave CXM loyalty platform integration — two MCP connectors (production read-only, stage read/write) plus skills for pre-launch config verification, troubleshooting, tenant orientation, and guided authoring.",
+  "description": "Wave CXM loyalty platform integration: a read-only production connector, a read/write stage connector, and skills to verify, diagnose, map and author loyalty configuration.",
   "author": {
     "name": "Desquared",
-    "email": "engineering@desquared.com"
+    "email": "engineering@desquared.com",
+    "url": "https://github.com/Desquared"
   },
-  "repository": "https://github.com/Desquared/AI-Marketplace",
   "homepage": "https://go.wavecxm.com",
-  "keywords": ["wave-cxm", "loyalty", "mcp", "cxm", "campaigns", "coupons", "rewards", "tenant"],
+  "repository": "https://github.com/Desquared/AI-Marketplace",
+  "keywords": ["wave-cxm", "loyalty", "customer-experience", "cxm", "mcp", "campaigns", "coupons", "rewards", "contests", "configuration"],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "hooks": "./hooks/hooks.json",
   "interface": {
     "displayName": "Wave CXM",
-    "shortDescription": "Verify, diagnose and author Wave CXM loyalty configuration",
-    "longDescription": "Connects to the Wave CXM loyalty platform through two MCP connectors — production, which is read-only by construction, and stage, which also accepts allow-listed writes. Ships skills for pre-launch configuration verification, evidence-led troubleshooting, tenant orientation with permission-gap reporting, and guided authoring on stage.",
+    "shortDescription": "Verify Wave CXM loyalty config",
+    "longDescription": "Connects to the Wave CXM loyalty platform through two MCP connectors: production, which is read-only because it has no write tools, and stage, which also accepts allow-listed writes. Skills verify configuration before it goes live, diagnose why a rule, contest or benefit misbehaved from what actually happened, map an unfamiliar tenant including what your permissions hide, and guide create, update and delete changes on stage. Every request is scoped to the tenants and permissions you grant when you sign in.",
     "developerName": "Desquared",
+    "category": "Business & Operations",
+    "capabilities": ["Read", "Write"],
     "websiteURL": "https://go.wavecxm.com",
-    "category": "Productivity",
-    "capabilities": ["Read", "Write"]
+    "supportURL": "https://github.com/Desquared/AI-Marketplace/issues",
+    "defaultPrompt": [
+      "Which Wave CXM tenants can I act on?",
+      "Give me a map of the Acme tenant.",
+      "Verify the Summer 2026 campaign before it goes live."
+    ],
+    "brandColor": "#1E2F3F",
+    "brandColorDark": "#E7584A",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/icon.png"
   }
 }

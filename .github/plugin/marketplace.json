@@ -5,29 +5,34 @@
     "email": "engineering@desquared.com"
   },
   "metadata": {
-    "description": "Desquared's public plugins for AI-assisted development."
+    "description": "Desquared public plugins for AI assistants, starting with the Wave CXM loyalty platform."
   },
   "plugins": [
     {
       "name": "wave-cxm",
       "source": "./plugins/wave-cxm",
-      "description": "Wave CXM loyalty platform integration — two MCP connectors (production read-only, stage read/write) plus skills for pre-launch config verification, troubleshooting, tenant orientation, and guided authoring.",
-      "version": "1.0.2",
+      "description": "Wave CXM loyalty platform integration: a read-only production connector, a read/write stage connector, and skills to verify, diagnose, map and author loyalty configuration.",
+      "version": "1.1.0",
       "author": {
         "name": "Desquared",
-        "email": "engineering@desquared.com"
+        "email": "engineering@desquared.com",
+        "url": "https://github.com/Desquared"
       },
       "repository": "https://github.com/Desquared/AI-Marketplace",
       "keywords": [
         "wave-cxm",
         "loyalty",
-        "mcp",
+        "customer-experience",
         "cxm",
+        "mcp",
         "campaigns",
         "coupons",
         "rewards",
-        "tenant"
-      ]
+        "contests",
+        "configuration"
+      ],
+      "homepage": "https://go.wavecxm.com",
+      "license": "LicenseRef-Desquared-Proprietary"
     }
   ]
 }

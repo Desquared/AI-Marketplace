@@ -1,0 +1,33 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.wavecxm/mcp",
+  "title": "Wave CXM",
+  "description": "Read-only access to Wave CXM loyalty tenants: campaigns, rules, rewards, coupons, contests.",
+  "version": "1.0.0",
+  "websiteUrl": "https://go.wavecxm.com",
+  "repository": {
+    "url": "https://github.com/Desquared/AI-Marketplace",
+    "source": "github",
+    "subfolder": "plugins/wave-cxm"
+  },
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/Desquared/AI-Marketplace/main/plugins/wave-cxm/assets/icon.png",
+      "mimeType": "image/png",
+      "sizes": ["512x512"]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.wavecxm.com/mcp"
+    }
+  ],
+  "_meta": {
+    "io.modelcontextprotocol.registry/publisher-provided": {
+      "com.github": {
+        "serverDisplayName": "Wave CXM"
+      }
+    }
+  }
+}

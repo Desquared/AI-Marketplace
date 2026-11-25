@@ -23,9 +23,16 @@ body:
       label: Runtime
       options:
         - Claude Code
+        - Claude (web, desktop or mobile)
         - GitHub Copilot CLI
+        - VS Code (Copilot)
         - OpenAI Codex
+        - ChatGPT
         - Cursor
+        - Gemini CLI
+        - Kiro
+        - Cline
+        - Other MCP client (direct connection)
         - Other
     validations:
       required: true

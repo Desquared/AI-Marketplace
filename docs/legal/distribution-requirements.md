@@ -39,7 +39,7 @@
    [Smithery](#smithery) ·
    [mcp.so](#mcpso) ·
    [GitHub itself](#github-terms-of-service-public-repository)
-4. [Fields for files another change owns](#fields-for-files-another-change-owns)
+4. [Legal fields in the channel manifests](#legal-fields-in-the-channel-manifests)
 5. [Changes made in this repository](#changes-made-in-this-repository)
 
 ## Blockers and conflicts found
@@ -75,14 +75,16 @@ Placeholders in the repository are marked `[TO BE COMPLETED: …]`.
       Policy 3A). It should also say that tool results pass to the user's AI
       client provider and are processed under that provider's terms (OpenAI
       §1.3). Placeholders: `LICENSE.md` §5, `plugins/wave-cxm/README.md`.
-      Once it exists, also set `privacyPolicyUrl` in
-      `plugins/wave-cxm/.claude-plugin/plugin.json` and the Codex
+      Once it exists, replace the placeholder in `privacyPolicyUrl` in
+      `plugins/wave-cxm/.claude-plugin/plugin.json`, and add the Codex
       `interface.privacyPolicyURL`.
 - [ ] **Wave CXM terms of service URL**, public, HTTPS. Required by OpenAI and
       Cursor §4.2. Placeholders: `LICENSE.md` §5, `plugins/wave-cxm/README.md`.
-- [ ] **Support contact** (address or URL), monitored. Required by Anthropic
-      3B, OpenAI, Kiro README, Cursor §4.4. Placeholder:
-      `plugins/wave-cxm/README.md` → Support.
+- [ ] **Support contact**, monitored. Required by Anthropic 3B, OpenAI, Kiro
+      README, Cursor §4.4. The README and manifests point to this repository's
+      GitHub issues today. Confirm that is acceptable for each channel, or
+      supply an address; the Anthropic connector form asks for a support
+      contact.
 - [ ] **Security contact address.** Anthropic Terms require "a mechanism for
       receiving reports of security vulnerabilities". Placeholder:
       `SECURITY.md`. Enable GitHub private vulnerability reporting on the
@@ -169,8 +171,8 @@ Governing documents (both Anthropic listings):
 | README | At least 40 words in the plugin folder; shown as the listing description. | checklist | met |
 | Disclose behaviour | "Describe in the README everything the plugin runs, sends, or fetches". The scan fails undisclosed behaviour "such as sending data elsewhere, running hidden code". | checklist | met (README section added) |
 | Privacy policy | SDP 3A: a "clear, accessible privacy policy link explaining data collection, usage, and retention" for software that connects to a remote service. SDT: "provide and adhere to a privacy policy". No own-domain rule. | SDP, SDT | missing |
-| `privacyPolicyUrl` | `claude plugin validate` warns `PRIVACY_URL_MISSING`: a plugin that "connects to a remote MCP server or HTTP hook but declares no privacy policy URL (plugin.json `privacyPolicyUrl`, or a 'Privacy' link in README)". Not a hard failure. Set `privacyPolicyUrl` in `.claude-plugin/plugin.json` once the URL exists. | Claude Code CLI `plugin validate` directory checks (run 2026-11-25) | missing |
-| Icon | The same checks warn `ICON_MISSING`: square PNG or JPEG, 512–2048 px, under 2 MB, at `.claude-plugin/icon.png` or via `icon`; SVG and WebP refused. The icon is taken "only once: the first time the plugin is saved or submitted". Add it before the first save. | same | missing |
+| `privacyPolicyUrl` | `claude plugin validate` warns `PRIVACY_URL_MISSING`: a plugin that "connects to a remote MCP server or HTTP hook but declares no privacy policy URL (plugin.json `privacyPolicyUrl`, or a 'Privacy' link in README)". Not a hard failure. `.claude-plugin/plugin.json` now carries the field with a `[TO BE COMPLETED]` placeholder; replace it with the real URL. | Claude Code CLI `plugin validate` directory checks (run 2026-11-25) | missing (placeholder) |
+| Icon | The same checks warn `ICON_MISSING`: square PNG or JPEG, 512–2048 px, under 2 MB, at `.claude-plugin/icon.png` or via `icon`; SVG and WebP refused. The icon is taken "only once: the first time the plugin is saved or submitted". Add it before the first save. `.claude-plugin/plugin.json` now sets `icon` to `./assets/icon.png`. | same | met |
 | Terms of service URL | Not requested. | SDP, SDT, submit docs | met (n/a) |
 | Data-handling questions | Form asks: personal data read or stored, other data destinations, retention, intended for under-18s. Four acknowledgements; their text is not published. | [Submit](https://claude.com/docs/plugins/submit) | missing (answers); acknowledgement text unverified |
 | Remote MCP URLs | `type` `http` and absolute `https://` URLs; no credentials in files. | checklist | met |
@@ -296,7 +298,7 @@ Submitted at cursor.com/marketplace/publish with a repository link. Sources:
 | Export | §4.2(c): export-control and sanctions compliance. | terms | needs counsel |
 | Indemnity | §8.1 broad indemnity, including "any security vulnerability, data breach"; Cursor liability capped at $100. | terms §8, §10 | needs counsel |
 | Law | California; AAA arbitration; San Francisco courts. | terms §11–12 | needs counsel |
-| Manifest | `name` required; optional `description, version, author, homepage, repository, license, keywords, logo`; README documents usage. | plugin reference | met (homepage added); Cursor manifest owned by another change |
+| Manifest | `name` required; optional `description, version, author, homepage, repository, license, keywords, logo`; README documents usage. | plugin reference | met (`.cursor-plugin/plugin.json` declares licence, homepage, author) |
 | Form fields | Beyond the repository link, behind sign-in. | publish page | unverified |
 
 ## Gemini CLI extensions gallery
@@ -329,7 +331,7 @@ Sources: [Submit form](https://kiro.dev/powers/submit/),
 | README privacy link | "The repository README includes: Privacy Policy (link)". | submit | missing (placeholder in README) |
 | README support | "Support contact info (link or email)". | submit | missing (placeholder in README) |
 | GA servers | "Any MCP servers it uses are generally available, not in beta or preview". | submit | decision (#3) |
-| Manifest | `plugin.json` with `$schema`, `name`, `version`, `description`, `author` (name required), `keywords`, `license` (SPDX format recommended). `LicenseRef-Desquared-Proprietary` is a valid SPDX `LicenseRef`. | submit | license met; `$schema` owned by another change |
+| Manifest | `plugin.json` with `$schema`, `name`, `version`, `description`, `author` (name required), `keywords`, `license` (SPDX format recommended). `LicenseRef-Desquared-Proprietary` is a valid SPDX `LicenseRef`. | submit | license met; no Kiro power manifest yet |
 | User terms | §1(b): without stated terms, users get a licence "to access, download, modify, and otherwise use your Submission". The repository licence states Desquared's terms. | terms §1(b) | met |
 | Privacy and consent | §1(d): "legally adequate privacy notices" and consent; AWS may collect usage metrics from use of submissions. | terms §1(d) | missing (privacy URL) |
 | Licence to AWS | §1(e): "nonexclusive, royalty-free, sublicensable, transferable, worldwide license" to distribute, and to use "your name, logos, and Submissions" in marketing. | terms §1(e) | met (licence §3, §6) |
@@ -361,7 +363,7 @@ Published with `mcp-publisher publish` as `com.wavecxm/mcp`. Sources:
 | Namespace proof | TXT `v=MCPv1; k=ed25519; p=<PUBLIC_KEY>` at the apex `wavecxm.com`, or `https://wavecxm.com/.well-known/mcp-registry-auth` returning 200 with no redirects. | authentication | missing |
 | Public reachability | "A remote server MUST be publicly accessible at its specified URL." | remote servers | decision (stage) |
 | Permanence | "Server metadata is never permanently removed"; versions are immutable. | FAQ | needs counsel (minor) |
-| Fields | Required `name`, `description` (≤ 100 characters), `version`; optional `websiteUrl`, `repository`, `title`, `icons`. No privacy, licence or support field. | schema | owned by another change |
+| Fields | Required `name`, `description` (≤ 100 characters), `version`; optional `websiteUrl`, `repository`, `title`, `icons`. No privacy, licence or support field. | schema | met (`plugins/wave-cxm/server.json`) |
 | Training, indemnity, privacy URL | None. | ToS | met (n/a) |
 
 ## GitHub MCP Registry
@@ -416,23 +418,19 @@ it regardless of the licence. Source:
 | D.4 | GitHub may use repository content "for the purpose of training, developing, and improving artificial intelligence and machine learning models". | needs counsel (#8) |
 | D.6 | Contributions are licensed under the repository's licence unless an agreement says otherwise. | needs counsel (consider a contributor agreement or a no-outside-contributions note) |
 
-## Fields for files another change owns
+## Legal fields in the channel manifests
 
-Channel manifests and listing files are being added in a separate change. These
-legal and compliance fields belong in them:
-
-| File | Field | Value |
+| File | Field | Status |
 |---|---|---|
-| `plugins/wave-cxm/.codex-plugin/plugin.json` | `interface.privacyPolicyURL` | Wave CXM privacy policy URL (to be supplied) |
-| same | `interface.termsOfServiceURL` | Wave CXM terms URL (to be supplied) |
-| same | `interface.supportURL` | Support URL (to be supplied) |
-| `plugins/wave-cxm/.cursor-plugin/plugin.json` | `license`, `homepage`, `author` | `LicenseRef-Desquared-Proprietary`, `https://go.wavecxm.com`, `Desquared` |
-| Kiro power `plugin.json` | `license`, `author`, `$schema` | `LicenseRef-Desquared-Proprietary`, Desquared; README must link privacy policy and support |
-| Agent Plugins v1.0.0 `plugin.json` (awesome-copilot) | `license`, `homepage`, `author` | as above |
-| `gemini-extension.json` | — | No legal fields; ship `LICENSE.md` beside it |
-| `server.json` (MCP Registry) | `websiteUrl` | A page on the Wave CXM site that links the privacy policy, terms and support contact |
-| same | `name`, `description` | `com.wavecxm/mcp`; description ≤ 100 characters, no implied endorsement |
-| same | `repository` | Optional; omit or point to this repository |
+| `plugins/wave-cxm/.claude-plugin/plugin.json` | `privacyPolicyUrl`, `termsOfServiceUrl` | placeholders; replace with the real URLs |
+| same | `supportUrl`, `homepage`, `icon`, `network.hosts` | set |
+| `plugins/wave-cxm/.codex-plugin/plugin.json` | `interface.websiteURL`, `interface.supportURL` | set |
+| same | `interface.privacyPolicyURL`, `interface.termsOfServiceURL` | missing; add when the URLs exist (they must be HTTPS, so no placeholder) |
+| `plugins/wave-cxm/.cursor-plugin/plugin.json` | `license`, `homepage`, `author` | set |
+| `plugins/wave-cxm/plugin.json` (Agent Plugins v1.0.0, awesome-copilot) | `$schema`, `license`, `homepage`, `author` | set |
+| Kiro power `plugin.json` | `$schema`, `license`, `author`; README links privacy policy and support | no Kiro manifest yet; README section exists with placeholders |
+| `gemini-extension.json` (repository root) | — | no legal fields; the root `LICENSE.md` ships beside it |
+| `plugins/wave-cxm/server.json` (MCP Registry) | `name` `com.wavecxm/mcp`, `description` ≤ 100 characters, `websiteUrl`, `repository` | set; `websiteUrl` should lead to the privacy policy, terms and support contact |
 
 ## Changes made in this repository
 
@@ -447,12 +445,11 @@ legal and compliance fields belong in them:
   - §6: lets a Marketplace display the names and logos Desquared supplies with
     a listing, because Anthropic's Terms, Cursor §3.2 and §3.4, Kiro §1(e) and
     OpenAI §4.2 take that right and §6 previously denied it.
-- `plugins/wave-cxm/README.md`: "What the plugin runs, sends and fetches"
-  (Anthropic checklist), "Privacy and data" and "Support" with placeholders
-  (Kiro, Anthropic, OpenAI, Cursor), and a third-party trademark notice.
+- `plugins/wave-cxm/README.md`: a "Skills and rules" line in "What the plugin
+  runs and sends" (Anthropic checklist); in "Support, privacy and terms", how
+  sign-in scopes access, that tool results pass to the user's AI client
+  provider, and handling of members' personal data (Kiro, Anthropic, OpenAI,
+  Cursor); and a third-party trademark notice.
 - `README.md`: trademark notice and a pointer to each plugin's privacy section.
 - `SECURITY.md`: says Desquared also notifies affected marketplaces, matching
   the notification duties in Cursor §4.3, Kiro §1(d) and OpenAI §2.1.
-- Plugin manifests: `homepage` `https://go.wavecxm.com` in the three
-  manifests, and `interface.websiteURL` in the Codex manifest (OpenAI requires
-  a website URL; Cursor and Agent Plugins accept `homepage`).
